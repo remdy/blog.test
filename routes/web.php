@@ -14,3 +14,18 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::group([
+    'prefix' => 'admin',
+    'namespace'=>'Admin'
+], function () {
+    Route::get('/', 'DashboardController@index')->name('admin.panel');
+    Route::resource('/categories' , 'CategoriesController');
+    Route::get('/comments', 'CommentsController@index');
+    Route::get('/comments/toggle/{id}', 'CommentsController@toggle');
+    Route::delete('/comments/{id}/destroy', 'CommentsController@destroy')->name('comments.destroy');
+    Route::resource('/posts' , 'PostsController');
+    Route::get('/posts/toggle/{id}' , 'PostsController@toggle');
+    Route::resource('/subscribers', 'SubscriberController');
+    });
