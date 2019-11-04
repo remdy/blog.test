@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\TagsRequest;
-use App\Tag;
+use App\Http\Requests\UsersRequest;
+use App\Http\Requests\UsersUpdateRequest;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class TagsController extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +17,9 @@ class TagsController extends Controller
      */
     public function index()
     {
-        $tags = Tag::all();
+        $users = User::all();
 
-        return view('admin.tags.index', compact('tags'));
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -28,7 +29,7 @@ class TagsController extends Controller
      */
     public function create()
     {
-        return view('admin.tags.create');
+        return view('admin.users.create');
     }
 
     /**
@@ -37,21 +38,13 @@ class TagsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TagsRequest $request)
+    public function store(UsersRequest $request)
     {
-        Tag::create($request->all());
-        return redirect()->route('tags.index');
-    }
+       $user = User::add($request->all());
+       $user->generatePassword('password');
+       $user->uploadAvatar($request->file('avatar'));
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect()->route('users.index');
     }
 
     /**
@@ -62,8 +55,8 @@ class TagsController extends Controller
      */
     public function edit($id)
     {
-        $tag = Tag::find($id);
-        return view('admin.tags.edit', compact('tag'));
+        $user = User::find($id);
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
@@ -73,12 +66,14 @@ class TagsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TagsRequest $request, $id)
+    public function update(UsersUpdateRequest $request, $id)
     {
-        $tag = Tag::find($id);
-        $tag->update($request->all());
+        $user = User::find($id);
+        $user->edit($request->all());
+        $user->generatePassword($request->get('password'));
+        $user->uploadAvatar($request->file('avatar'));
 
-        return redirect()->route('tags.index');
+        return redirect()->route('users.index');
     }
 
     /**
@@ -89,7 +84,16 @@ class TagsController extends Controller
      */
     public function destroy($id)
     {
-        Tag::find($id)->delete();
-        return redirect()->route('tags.index');
+        User::find($id)->remove();
+
+        return redirect()->route('users.index');
+    }
+
+    public function toggle($id)
+    {
+        $user = User::find($id);
+        $user->toggleBan();
+
+        return redirect()->back();
     }
 }

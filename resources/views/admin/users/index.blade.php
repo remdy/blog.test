@@ -6,11 +6,11 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Подписчики
+                Пользователи
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li><a href="#">Examples</a></li>
+                <li><a href="{{ route('admin.panel') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li><a href="{{ route('users.index') }}">Examples</a></li>
                 <li class="active">Blank page</li>
             </ol>
         </section>
@@ -21,30 +21,44 @@
             <!-- Default box -->
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Список подписчиков</h3>
+                    <h3 class="box-title">Список пользователей</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
                     <div class="form-group">
-                        <a href="{{ route('subscribers.create') }}" class="btn btn-success">Добавить</a>
+                        <a href="{{ route('users.create') }}" class="btn btn-success">Добавить</a>
                     </div>
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Email</th>
+                            <th>Имя</th>
+                            <th>E-mail</th>
+                            <th>Аватар</th>
+                            <th>Статус</th>
                             <th>Действия</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($subs as $subscriber)
+
+                        @foreach($users as $user)
                             <tr>
-                                <td>{{ $subscriber->id }}</td>
-                                <td>{{ $subscriber->email }}
+                                <td>{{ $user->id }}</td>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>
+                                    <img src="{{ $user->getImage() }}" alt="" class="img-responsive" width="150">
                                 </td>
                                 <td>
-                                    {{--                                <a href="edit.html" class="fa fa-pencil"></a>--}}
-                                    <form class="form-horizontal contact-form" role="form" method="post" action="{{ route('subscribers.destroy', $subscriber->id) }}">
+                                    @if($user->status == 1)
+                                        <a href="/admin/users/toggle/{{ $user->id }}" class="fa fa-lock"></a>
+                                    @else
+                                        <a href="/admin/users/toggle/{{ $user->id }}" class="fa fa-thumbs-o-up"></a>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('users.edit', $user->id) }}" class="fa fa-pencil"></a>
+                                    <form class="form-horizontal contact-form" role="form" method="post" action="{{ route('users.destroy', $user->id) }}">
                                         @csrf
                                         @method('DELETE')
                                         <button onclick="return confirm('Вы уверены?')" type="submit" class="delete">

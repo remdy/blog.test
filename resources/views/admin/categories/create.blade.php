@@ -6,8 +6,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Добавить категорию
-            <small>приятные слова..</small>
+            Категории
         </h1>
     </section>
 
@@ -19,7 +18,7 @@
             <form class="form-horizontal contact-form" role="form" method="post" action="{{ route('categories.store') }}">
                 @csrf
             <div class="box-header with-border">
-                <h3 class="box-title">Добавляем категорию</h3>
+                <h3 class="box-title">Добавить категорию</h3>
                 @include('admin.errors')
             </div>
             <div class="box-body">

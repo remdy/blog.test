@@ -29,4 +29,6 @@ Route::group([
     Route::get('/posts/toggle/{id}' , 'PostsController@toggle');
     Route::resource('/subscribers', 'SubscriberController');
     Route::resource('/tags', 'TagsController');
+    Route::resource('/users', 'UsersController');
+    Route::get('/users/toggle/{id}' , 'UsersController@toggle');
     });

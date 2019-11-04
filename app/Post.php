@@ -78,7 +78,7 @@ class Post extends Model
     {
         if ($this->image != null)
         {
-            Storage::delete('uploads/' . $this->image);
+            Storage::delete('/storage/uploads/' . $this->image);
         }
     }
 
@@ -97,7 +97,7 @@ class Post extends Model
     {
         if ($this->image == null)
         {
-            return '/img/no-img.png';
+            return '/img/no-image.png';
         }
         return '/storage/uploads/' . $this->image;
     }

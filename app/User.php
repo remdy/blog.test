@@ -5,9 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Psy\Util\Str;
 
 class User extends Authenticatable
 {
@@ -52,7 +50,7 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
-    public function add($fields)
+    public static function add($fields)
     {
         $user = new static;
         $user->fill($fields);
@@ -88,8 +86,8 @@ class User extends Authenticatable
 
         $this->removeAvatar();
 
-        $filename = Hash::make(Str::random(10)) . '.' . $image->extension();
-        $image->storeAs('uploads', $filename);
+        $filename = \Hash::make(\Str::random(10)) . '.' . $image->extension();
+        $image->storeAs('uploads', $filename, 'public');
         $this->avatar = $filename;
         $this->save();
     }
@@ -98,7 +96,7 @@ class User extends Authenticatable
     {
         if ($this->avatar != null)
         {
-            Storage::delete('uploads/' . $this->avatar);
+            Storage::delete('/storage/uploads/' . $this->avatar);
         }
     }
 
@@ -108,8 +106,7 @@ class User extends Authenticatable
         {
             return '/img/no-image.png';
         }
-
-        return '/uploads/' . $this->avatar;
+        return '/storage/uploads/' . $this->avatar;
     }
 
     public function makeAdmin()
@@ -147,10 +144,10 @@ class User extends Authenticatable
 
     public function toggleBan()
     {
-        if ($this->status = 0)
+        if ($this->status == 1)
         {
-            return $this->ban();
+            return $this->unBan();
         }
-        return $this->unBan();
+        return $this->ban();
     }
 }

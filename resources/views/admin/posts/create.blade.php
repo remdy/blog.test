@@ -6,8 +6,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Добавить статью
-                <small>приятные слова..</small>
+                Посты
             </h1>
         </section>
 
@@ -18,7 +17,7 @@
         <!-- Default box -->
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Добавляем статью</h3>
+                    <h3 class="box-title">Добавить пост</h3>
                     @include('admin.errors')
                 </div>
                 <div class="box-body">
@@ -32,7 +31,7 @@
                             <label for="exampleInputFile">Лицевая картинка</label>
                             <input type="file" name="image" id="exampleInputFile">
 
-                            <p class="help-block">Какое-нибудь уведомление о форматах..</p>
+                            <p class="help-block">Изображение может соответствовать форматам (jpeg, png, bmp, gif, svg, or webp)</p>
                         </div>
                         <div class="form-group">
                             <label>Категория</label>

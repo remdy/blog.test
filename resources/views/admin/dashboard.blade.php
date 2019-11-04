@@ -6,8 +6,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Привет! Это админка
-            <small>приятные слова..</small>
+            Панель администратора
         </h1>
     </section>
 
@@ -20,11 +19,11 @@
                 <h3 class="box-title">Главная страница</h3>
             </div>
             <div class="box-body">
-                Текст инструкции по пользованию админкой
+                Инструкции
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                и здесь есть место для какого-нибудь текста
+                Описание
             </div>
             <!-- /.box-footer-->
         </div>

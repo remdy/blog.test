@@ -39,7 +39,9 @@ class PostsRequest extends FormRequest
             'title.required' => 'Введите название статьи',
             'content.required' => 'Введите полный текст (Описание статьи)',
             'date.required' => 'Выберите дату',
-            'image.image' => 'Неверный формат изображения'
+            'image.image' => 'Неверный формат изображения',
+            'tag.required' => 'Поле "Тег" обязательно',
+            'category_id.required' => 'Поле "Категория" обязательно'
         ];
     }
 }
