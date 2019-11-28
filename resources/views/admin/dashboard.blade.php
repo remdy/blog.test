@@ -19,7 +19,7 @@
                 <h3 class="box-title">Главная страница</h3>
             </div>
             <div class="box-body">
-                Инструкции
+                Если вы это видите, значит вы администратор!)
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
@@ -28,7 +28,9 @@
             <!-- /.box-footer-->
         </div>
         <!-- /.box -->
-
+        <div class="box-footer">
+            <a href="/" class="btn btn-primary btn-lg">На главную страницу</a>
+        </div>
     </section>
     <!-- /.content -->
 </div>

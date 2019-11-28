@@ -8,11 +8,6 @@
             <h1>
                 Пользователи
             </h1>
-            <ol class="breadcrumb">
-                <li><a href="{{ route('admin.panel') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li><a href="{{ route('users.index') }}">Examples</a></li>
-                <li class="active">Blank page</li>
-            </ol>
         </section>
 
         <!-- Main content -->

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -11,6 +12,9 @@ use Cviebrock\EloquentSluggable\Sluggable;
 
 class Post extends Model
 {
+    const IS_DRAFT = 0;
+    const IS_PUBLIC = 1;
+
     use Sluggable;
 
     protected $fillable = ['title','content', 'date','description'];
@@ -56,7 +60,7 @@ class Post extends Model
     {
         $post = new static;
         $post->fill($fields);
-        $post->user_id = 1;
+        $post->user_id = Auth::user()->id;
         $post->save();
 
         return $post;
@@ -117,13 +121,13 @@ class Post extends Model
 
     public function setDraft()
     {
-        $this->status = 0;
+        $this->status = Post::IS_DRAFT;
         $this->save();
     }
 
     public function setPublic()
     {
-        $this->status = 1;
+        $this->status = Post::IS_PUBLIC;
         $this->save();
     }
 

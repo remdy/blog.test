@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
@@ -17,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email',
+        'name', 'email', 'position'
     ];
 
     /**
@@ -149,5 +150,12 @@ class User extends Authenticatable
             return $this->unBan();
         }
         return $this->ban();
+    }
+
+    public function getName()
+    {
+       $name = Auth::user()->name;
+
+       return $name;
     }
 }

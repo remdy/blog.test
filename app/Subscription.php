@@ -3,8 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class Subscription extends Model
 {
@@ -19,7 +17,7 @@ class Subscription extends Model
 
     public function generateToken()
     {
-        $this->token = Hash::make(Str::random(100));
+        $this->token = (str_random(16));
         $this->save();
     }
 

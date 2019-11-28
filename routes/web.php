@@ -16,9 +16,35 @@ Route::get('/', function () {
 });
 
 
+Route::group(['middleware' => 'auth'], function (){
+    Route::get('/profile', 'ProfileController@index');
+    Route::post('/profile', 'ProfileController@store');
+    Route::get('/logout', 'AuthController@logout');
+    Route::post('/comment', 'CommentsController@store');
+});
+
+Route::group(['middleware' => 'guest'], function(){
+Route::get('/register', 'AuthController@registerForm');
+Route::post('/register', 'AuthController@register');
+Route::get('/login', 'AuthController@loginForm')->name('login');
+Route::post('/login', 'AuthController@login');
+});
+
+Route::get('/', 'HomeController@index');
+Route::get('/post/{slug}', 'HomeController@show')->name('post.show');
+Route::get('/tag/{slug}', 'HomeController@tag')->name('tag.show');
+Route::get('/category/{slug}', 'HomeController@category')->name('category.show');
+Route::post('/subscribe', 'SubsController@subscribe');
+Route::get('/verify/{token}', 'SubsController@verify');
+Route::get('/product', 'ProductsController@index');
+Route::get('/product/{slug}', 'ProductsController@show')->name('product.show');
+Route::get('/about', 'HomeController@about');
+Route::get('/cards/{slug}', 'CardsController@show')->name('card.show');
+
 Route::group([
     'prefix' => 'admin',
-    'namespace'=>'Admin'
+    'namespace'=>'Admin',
+    'middleware' => 'admin'
 ], function () {
     Route::get('/', 'DashboardController@index')->name('admin.panel');
     Route::resource('/categories' , 'CategoriesController');
@@ -31,4 +57,18 @@ Route::group([
     Route::resource('/tags', 'TagsController');
     Route::resource('/users', 'UsersController');
     Route::get('/users/toggle/{id}' , 'UsersController@toggle');
+    Route::resource('/products', 'ProductsController');
+    Route::get('/products/toggle/{id}' , 'ProductsController@toggle');
+    Route::resource('/sliders', 'SlidersController');
+    Route::resource('/about', 'AboutsController');
+    Route::resource('/cards', 'CardsController');
     });
+
+
+Route::group([
+    'prefix' => 'user',
+    'namespace' => 'User',
+    'middleware' => 'auth'
+], function (){
+        Route::resource('/forms','FormsController');
+});
