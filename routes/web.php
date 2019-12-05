@@ -11,13 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 
 Route::group(['middleware' => 'auth'], function (){
-    Route::get('/profile', 'ProfileController@index');
+    Route::get('/profile', 'ProfileController@index')->middleware('verified');
     Route::post('/profile', 'ProfileController@store');
     Route::get('/logout', 'AuthController@logout');
     Route::post('/comment', 'CommentsController@store');
@@ -30,15 +26,15 @@ Route::get('/login', 'AuthController@loginForm')->name('login');
 Route::post('/login', 'AuthController@login');
 });
 
-Route::get('/', 'HomeController@index');
-Route::get('/post/{slug}', 'HomeController@show')->name('post.show');
-Route::get('/tag/{slug}', 'HomeController@tag')->name('tag.show');
-Route::get('/category/{slug}', 'HomeController@category')->name('category.show');
+Route::get('/', 'PaginateController@index');
+Route::get('/post/{slug}', 'PaginateController@show')->name('post.show');
+Route::get('/tag/{slug}', 'PaginateController@tag')->name('tag.show');
+Route::get('/category/{slug}', 'PaginateController@category')->name('category.show');
 Route::post('/subscribe', 'SubsController@subscribe');
 Route::get('/verify/{token}', 'SubsController@verify');
 Route::get('/product', 'ProductsController@index');
 Route::get('/product/{slug}', 'ProductsController@show')->name('product.show');
-Route::get('/about', 'HomeController@about');
+Route::get('/about', 'PaginateController@about');
 Route::get('/cards/{slug}', 'CardsController@show')->name('card.show');
 
 Route::group([
@@ -70,5 +66,10 @@ Route::group([
     'namespace' => 'User',
     'middleware' => 'auth'
 ], function (){
-        Route::resource('/forms','FormsController');
+        Route::resource('/forms','FormsController')->middleware('verified');
 });
+
+
+Auth::routes(['verify' => true]);
+
+Route::get('/home', 'HomeController@index')->name('home');
